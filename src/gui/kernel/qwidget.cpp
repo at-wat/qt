@@ -9039,7 +9039,6 @@ void QWidget::wheelEvent(QWheelEvent *event)
 }
 #endif // QT_NO_WHEELEVENT
 
-#ifndef QT_NO_TABLETEVENT
 /*!
     This event handler, for event \a event, can be reimplemented in a
     subclass to receive tablet events for the widget.
@@ -9058,7 +9057,6 @@ void QWidget::tabletEvent(QTabletEvent *event)
 {
     event->ignore();
 }
-#endif // QT_NO_TABLETEVENT
 
 /*!
     This event handler, for event \a event, can be reimplemented in a

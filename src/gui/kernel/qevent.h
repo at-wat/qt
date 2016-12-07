@@ -175,7 +175,6 @@ protected:
 };
 #endif
 
-#ifndef QT_NO_TABLETEVENT
 class Q_GUI_EXPORT QTabletEvent : public QInputEvent
 {
 public:
@@ -219,7 +218,6 @@ protected:
     // OS-specific events for this.
     void *mExtra;
 };
-#endif // QT_NO_TABLETEVENT
 
 class Q_GUI_EXPORT QKeyEvent : public QInputEvent
 {

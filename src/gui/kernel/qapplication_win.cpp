@@ -281,9 +281,11 @@ extern QWidget* qt_get_tablet_widget();
 extern bool qt_sendSpontaneousEvent(QObject*, QEvent*);
 extern QRegion qt_dirtyRegion(QWidget *);
 
+#ifndef QT_NO_TABLETEVENT
 typedef QHash<quint64, QTabletDeviceData> QTabletCursorInfo;
 Q_GLOBAL_STATIC(QTabletCursorInfo, tCursorInfo)
 QTabletDeviceData currentTabletPointer;
+#endif // QT_NO_TABLETEVENT
 
 // from qregion_win.cpp
 extern HRGN qt_tryCreateRegion(QRegion::RegionType type, int left, int top, int right, int bottom);
@@ -3649,10 +3651,12 @@ bool QETWidget::translateTabletEvent(const MSG &msg, PACKET *localPacketBuf,
 
         // This code is to delay the tablet data one cycle to sync with the mouse location.
         QPointF hiResTabletGlobalPosF = oldHiResTabletGlobalPosF;
+#ifndef QT_NO_TABLETEVENT
         oldHiResTabletGlobalPosF =
             currentTabletPointer.scaleCoord(ptNew.x, ptNew.y, desktopArea.left(),
                                             desktopArea.width(), desktopArea.top(),
                                             desktopArea.height());
+#endif // QT_NO_TABLETEVENT
 
         if (btnNew) {
 #ifndef QT_NO_TABLETEVENT

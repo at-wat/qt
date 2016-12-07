@@ -673,9 +673,7 @@ protected:
 #ifndef QT_NO_CONTEXTMENU
     virtual void contextMenuEvent(QContextMenuEvent *);
 #endif
-#ifndef QT_NO_TABLETEVENT
     virtual void tabletEvent(QTabletEvent *);
-#endif
 #ifndef QT_NO_ACTION
     virtual void actionEvent(QActionEvent *);
 #endif
