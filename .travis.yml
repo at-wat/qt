@@ -1,0 +1,30 @@
+dist: trusty
+sudo: required
+
+language: c
+compiler: gcc
+
+before_install:
+  - sudo apt-get update -y
+  - sudo apt-get install -y gcc-mingw-w64-i686 g++-mingw-w64-i686
+  - unset CC
+script:
+  - ./configure -xplatform win32-g++ -device-option CROSS_COMPILE=i686-w64-mingw32- -prefix /usr/local/mingw32 -opensource -confirm-license -static -no-sse4.1 -no-sse4.2 -no-ssse3 -no-avx -no-neon -release -nomake examples -nomake tests -nomake demos -nomake docs -D _WIN32_WINNT=0x0501 -no-qt3support -no-multimedia -no-audio-backend -no-phonon -no-phonon-backend -no-svg -no-webkit -no-javascript-jit -no-script -no-scripttools -no-declarative -no-declarative-debug -qt-zlib -no-libtiff -no-gif -qt-libpng -no-libmng -qt-libjpeg -no-openssl -no-rpath -no-nis -no-cups -no-iconv -no-pch -no-dbus -no-opengl -no-openvg -no-sm -no-xshape -no-xvideo -no-xsync -no-xinerama -no-xcursor -no-xfixes -no-xrandr -no-xrender -no-mitshm -no-xinput -no-xkb -no-glib -no-sql-psql -no-sql-odbc -D QT_NO_TABLETEVENT
+  - make
+  - sudo make install
+
+before_deploy:
+  - mkdir packages
+  - tar czf ./packages/qt4.ubuntu-trusty.mingw32.tar.gz /usr/local/mingw32
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: "DtwuBk9ahGpJFKefM0zDBuLzjCyzVI4MmozQWQ/wvlSNgHMKiOaI825igfTeugrIJh9mfewve/xq664njkBCNV3DXHY3Y6/bMuxQW0t1jy5b4UbVb+aA1vADgtmi87t9sd0uqBQPey7cxxS94avC92WzlQA3cQhVPNEXIShKFSO/LVjjuj2Nxn4laxtS5AQLVNmmnLTGRkMK02iEICgHbBWTiFwpU4edoqHfutqVwZr8CwqR85dQ7mQnNhQPivyClWaL65zQQgmf+0OiRbEaCk/EZKj2qufzTH4Y9z/AvMhQOH9BqwXAEH+jSM3PFVrVuv1GS/wX87+3HB3q1KqSP5WAQCbEnI+BhsajUMjyt58on+Q2nLrsN/nX0A6422zZjV1Dc87Cmv4/NJZAmeiSsGiozWFC9Q1IHxy9UjLiiYuBWMzsaYfli/Gq3OZLhqIY6C6tc44D3LJncjlOisVTrF+hnCerLyt9hRKQk2WsnvCh6/kJDOQDXwrLEW2ZFSVdAQccLtN0hZjIHNw3vM1hZr8vHL7ZhxfE7TWc6qJl2EhGfc/YgisnTSYb9FhOWNgTordRg/ftWNMvwqlga11zhwUAMlN5yupMP6JNwukrtlR1rohT0Uo4KvUNFFlRCu/QDCiLOu4+PXUlEY+YpY/RmCIK2luf2ZwEIClGRXoESP4="
+  file:
+    - packages/qt4.ubuntu-trusty.mingw32.tar.gz
+  on:
+    tags: true
+
+
